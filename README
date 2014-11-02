@@ -1,0 +1,42 @@
+Description
+===========
+
+This is a simple cli utility to view EFREI timetables (because the extranet
+is... well, CLI is good).
+
+Dependencies
+============
+
+python3
+
+
+ork's extranet library: https://github.com/ork/extranet.py
+docopt:                 https://github.com/docopt/docopt
+
+* This libraries are already distributed within this repository *
+
+Installation
+============
+
+Just symlink timetable.py to somewhere in your PATH.
+
+TODO
+====
+
+[ ] Add color
+[ ] Select timetable for a specific date
+
+License
+=======
+
+GNU Lesser GPL version 3, see the LGPLv3 file
+
+Also, pay attention to the dependancies licenses if you want to use them
+
+Contact
+=======
+
+Main developper: Cédric Picard
+Email:           cedric.picard@efrei.net
+Twitter:         @Cym13
+GPG:             383A 76B9 D68D 2BD6 9D2B  4716 E3B9 F4FE 5CED 42CB
