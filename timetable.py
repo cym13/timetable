@@ -15,7 +15,7 @@ Options:
     -j, --json          Print data in the JSON format
     -m, --manual        Do not use automatic login
     -f, --file FILE     Use FILE to find credential
-                        Default is the 'credentials' in the program directory
+                        Default is the 'credentials' in the HOME directory
 
 Examples:
     timetable  0        : print today
@@ -25,6 +25,7 @@ Examples:
     timetable  current  : print the current course
 """
 
+import os
 import sys
 import time
 import base64
@@ -110,7 +111,7 @@ def converted_dates(timetable):
 def main():
     args = docopt(__doc__)
 
-    cred_file = args["--file"] or "credentials"
+    cred_file = args["--file"] or "%s/.credentials" % os.environ("HOME")
 
     if args["--manual"]:
         username = input("Username: ")

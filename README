@@ -4,11 +4,33 @@ Description
 This is a simple cli utility to view EFREI timetables (because the extranet
 is... well, CLI is good).
 
+Usage
+=====
+
+Usage: timetable [-h] [-j] [-m] [-f FILE] [PERIOD]
+
+Arguments:
+    PERIOD     Prints timetable for a given period
+               Default is to print all available informations
+
+Options:
+    -h, --help          Print this help and exit
+    -j, --json          Print data in the JSON format
+    -m, --manual        Do not use automatic login
+    -f, --file FILE     Use FILE to find credential
+                        Default is the 'credentials' in the HOME directory
+
+Examples:
+    timetable  0        : print today
+    timetable  2        : print today, tomorrow and the day after
+    timetable  next     : print the next course
+    timetable  previous : print the previous course
+    timetable  current  : print the current course
+
 Dependencies
 ============
 
-python3
-
+Python3
 
 ork's extranet library: https://github.com/ork/extranet.py
 docopt:                 https://github.com/docopt/docopt
