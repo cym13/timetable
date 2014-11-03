@@ -30,12 +30,17 @@ Examples:
 Dependencies
 ============
 
+* This is not installed with this program *
+
 Python3
+requests:   https://github.com/kennethreitz/requests
+
+
+* This libraries are already distributed within this repository *
 
 ork's extranet library: https://github.com/ork/extranet.py
 docopt:                 https://github.com/docopt/docopt
 
-* This libraries are already distributed within this repository *
 
 Installation
 ============
