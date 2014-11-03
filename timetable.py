@@ -111,7 +111,7 @@ def converted_dates(timetable):
 def main():
     args = docopt(__doc__)
 
-    cred_file = args["--file"] or "%s/.credentials" % os.environ("HOME")
+    cred_file = args["--file"] or "%s/.credentials" % os.environ["HOME"]
 
     if args["--manual"]:
         username = input("Username: ")
