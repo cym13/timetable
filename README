@@ -49,11 +49,15 @@ Installation
 
 Just symlink timetable.py to somewhere in your PATH.
 
+You will have to use `timetable.py -m -s' if you want your password
+to be saved and then used automatically.
+
 TODO
 ====
 
-[ ] Add color
+[ ] Better time range control
 [ ] Select timetable for a specific date
+[ ] Add color
 
 License
 =======

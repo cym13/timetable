@@ -115,6 +115,9 @@ def main():
 
     cred_file = args["--file"] or "%s/.extranet" % os.environ["HOME"]
 
+    if not os.path.exists(cred_file):
+        open(cred_file, 'w').close()
+
     if args["--manual"]:
         username = input("Username: ")
         password = getpass.getpass("Password: ")
@@ -130,7 +133,11 @@ def main():
             password = keyring.get_password("extranet", username)
 
 
-    timetable = Extranet(username, password).get_timetable()
+    try:
+        timetable = Extranet(username, password).get_timetable()
+    except ValueError as e:
+        exit("\nNo password has been saved yet.\n" +
+             "Please, try:   timetable.py -ms")
 
     # Sort timetable chronologically
     timetable.sort(key=lambda x: x["start"].timestamp())
