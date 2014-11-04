@@ -2,6 +2,7 @@ import requests
 import json
 import re
 from datetime import date, datetime, timedelta
+from .exceptions import *
 
 UA_STRING = 'Mozilla/5.0 (Extranet-py)'
 
@@ -49,10 +50,10 @@ class Extranet(object):
         try:
             self.session.get(BASE_URL)
         except requests.ConnectionError as e:
-            print('Raise Connect error')
+            raise ConnectionError
         else:
             if not 'ASP.NET_SessionId' in self.session.cookies:
-                print('Raise Fatal error')
+                raise FatalError
             else:
                 self.connected = True
 
@@ -68,7 +69,7 @@ class Extranet(object):
         self.session.post(BASE_URL + LOGIN_URL, params=auth_info)
 
         if not 'extranet_db' in self.session.cookies:
-            print('Raise Login error')
+            raise LoginError
         else:
             self.logged = True
 
