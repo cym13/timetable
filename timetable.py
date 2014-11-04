@@ -132,7 +132,7 @@ def main():
     if args["--manual"]:
         username = input("Username: ")
         password = getpass.getpass("Password: ")
-        if "--save" in args:
+        if args["--save"]:
             with open(cred_file, 'w') as f:
                 f.write(username + '\n')
                 keyring.set_password("extranet", username, password)
