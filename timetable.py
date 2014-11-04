@@ -34,6 +34,7 @@ import datetime
 import getpass
 from docopt import docopt
 from extranet import Extranet
+from extranet.exceptions import *
 import keyring
 
 # To use french names
@@ -146,10 +147,20 @@ def main():
 
     try:
         timetable = Extranet(username, password).get_timetable()
-    except ValueError as e:
-        exit("\nAuthentication failed.\n"
+    except LoginError:
+        exit("Wrong login\n"
            + "If no password has been saved yet, please, try:\n"
-           + "\ttimetable.py -ms")
+           + "    timetable.py -ms")
+
+    except ConnectionError:
+        exit("Cannot establish a connection to server")
+
+    except FatalError:
+        exit("An unexpected error happened")
+
+    except ValueError as e:
+        exit("If no password has been saved yet, please, try:\n"
+           + "    timetable.py -ms")
 
     # Sort timetable chronologically
     timetable.sort(key=lambda x: x["start"].timestamp())
