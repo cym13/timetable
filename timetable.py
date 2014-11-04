@@ -4,7 +4,7 @@
 """
 Get efrei timetables
 
-Usage: timetable [-h] [-j] [-m] [-f FILE] [PERIOD]
+Usage: timetable [-h] [-j] [-m] [-s] [-f FILE] [PERIOD]
 
 Arguments:
     PERIOD     Prints timetable for a given period
@@ -14,6 +14,8 @@ Options:
     -h, --help          Print this help and exit
     -j, --json          Print data in the JSON format
     -m, --manual        Do not use automatic login
+    -s, --save          Save password to keyring.
+                        Needs to be combined with --manual
     -f, --file FILE     Use FILE to find credential
                         Default is the 'credentials' in the HOME directory
 
@@ -28,11 +30,11 @@ Examples:
 import os
 import sys
 import time
-import base64
 import datetime
 import getpass
 from docopt import docopt
 from extranet import Extranet
+import keyring
 
 # To use french names
 #DAYS   = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"]
@@ -111,16 +113,21 @@ def converted_dates(timetable):
 def main():
     args = docopt(__doc__)
 
-    cred_file = args["--file"] or "%s/.credentials" % os.environ["HOME"]
+    cred_file = args["--file"] or "%s/.extranet" % os.environ["HOME"]
 
     if args["--manual"]:
         username = input("Username: ")
         password = getpass.getpass("Password: ")
+        if "--save" in args:
+            with open(cred_file, 'w') as f:
+                f.write(username + '\n')
+                keyring.set_password("extranet", username, password)
+
     else:
         # No encryption, just avoid grepping
         with open(cred_file) as f:
-            username = base64.b64decode(f.readline()[:-1])
-            password = base64.b64decode(f.readline()[:-1])
+            username = f.readline()[:-1]
+            password = keyring.get_password("extranet", username)
 
 
     timetable = Extranet(username, password).get_timetable()
