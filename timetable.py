@@ -65,8 +65,30 @@ def period(start, end, *, days=DAYS, months=MONTHS):
                 em   = end.minute)
 
 
-def today():
+def now():
     return datetime.datetime.fromtimestamp(time.time())
+
+
+def courses_in_range(start, end, num, timetable):
+    result    = []
+    start_lim = start
+    end_lim   = end
+
+    for course in timetable:
+        if num == 0:
+            break
+
+        if type(start) == str:
+            start_lim = course[start].timestamp()
+
+        if type(end) == str:
+            end_lim = course[end].timestamp()
+
+        if start_lim < now().timestamp() <= end_lim:
+            result.append(course)
+            num -= 1
+
+    return result
 
 
 def filter_dates(timetable, selection):
@@ -75,28 +97,17 @@ def filter_dates(timetable, selection):
 
     if selection == "previous":
         timetable.reverse()
-        for course in timetable:
-            if today().timestamp() > course["end"].timestamp():
-                return [course]
-        return []
+        return courses_in_range("end", now().timestamp(), 1, timetable)
 
     if selection == "current":
-        for course in timetable:
-            if (course["start"].timestamp() < today().timestamp()
-                                            < course["end"].timestamp()):
-                return [course]
-        return []
+        return courses_in_range("start", "end", 1, timetable)
 
     if selection == "next":
-        for course in timetable:
-            if today().timestamp() < course["start"].timestamp():
-                return [course]
-        return []
-
+        return courses_in_range(0, "start", 1, timetable)
 
     try:
         return [ x for x in timetable
-                   if x["start"].day <= today().day + int(selection) ]
+                   if x["start"].day <= now().day + int(selection) ]
     except ValueError as e:
         sys.exit("Invalid command: " + selection)
 
@@ -136,8 +147,9 @@ def main():
     try:
         timetable = Extranet(username, password).get_timetable()
     except ValueError as e:
-        exit("\nNo password has been saved yet.\n" +
-             "Please, try:   timetable.py -ms")
+        exit("\nAuthentication failed.\n"
+           + "If no password has been saved yet, please, try:\n"
+           + "\ttimetable.py -ms")
 
     # Sort timetable chronologically
     timetable.sort(key=lambda x: x["start"].timestamp())
