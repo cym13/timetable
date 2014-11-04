@@ -37,6 +37,7 @@ from extranet import Extranet
 from extranet.exceptions import *
 import keyring
 
+
 # To use french names
 #DAYS   = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"]
 #MONTHS = ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin",
@@ -70,7 +71,15 @@ def now():
     return datetime.datetime.fromtimestamp(time.time())
 
 
+# This function cannot be considered stable at this time, use with caution
 def courses_in_range(start, end, num, timetable):
+    """
+    start and end may be a timestamp, "start" or "end"
+    where "start" and "end" will refer to the corresponding time
+    of the courses.
+
+    num is the maximum number of results wanted.
+    """
     result    = []
     start_lim = start
     end_lim   = end
@@ -121,7 +130,6 @@ def converted_dates(timetable):
     return timetable
 
 
-
 def main():
     args = docopt(__doc__)
 
@@ -139,7 +147,6 @@ def main():
                 keyring.set_password("extranet", username, password)
 
     else:
-        # No encryption, just avoid grepping
         with open(cred_file) as f:
             username = f.readline()[:-1]
             password = keyring.get_password("extranet", username)
@@ -172,6 +179,7 @@ def main():
         print(converted_dates(timetable))
     else:
         print_courses(timetable)
+
 
 if __name__ == "__main__":
     main()
