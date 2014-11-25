@@ -4,6 +4,12 @@ Description
 This is a simple cli utility to view EFREI timetables (because the extranet
 is... well, CLI is good).
 
+Warning
+=======
+
+The usage bellow is intended as an aim for the interface, all functions may
+not be fully implemented yet.
+
 Usage
 =====
 
@@ -12,6 +18,7 @@ Usage: timetable [-h] [-j] [-m] [-s] [-f FILE] [PERIOD]
 Arguments:
     PERIOD     Prints timetable for a given period
                Default is to print all available informations
+               See the examples below for more precisions
 
 Options:
     -h, --help          Print this help and exit
@@ -24,7 +31,7 @@ Options:
 
 Examples:
     timetable  0        : print the current course
-    timetable  i        : print i next courses
+    timetable  n        : print n next courses
     timetable  today    : print today's courses
     timetable  tomorrow : print tomorrow's courses
     timetable  first    : print tomorrow's first course
