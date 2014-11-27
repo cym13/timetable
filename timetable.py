@@ -178,9 +178,9 @@ def main():
     except FatalError:
         exit("An unexpected error happened")
 
-   # except ValueError as e:
-   #     exit("If no password has been saved yet, please, try:\n"
-   #        + "    timetable.py -ms")
+    except ValueError as e:
+        exit("If no password has been saved yet, please, try:\n"
+           + "    timetable.py -ms")
 
     # Sort timetable chronologically
     timetable.sort(key=lambda x: x["start"].timestamp())
