@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 # License: GNU LGPL v3
 """
-Get efrei timetables
+Get Unify's extranet timetables
 
-Usage: timetable [-h] [-j] [-m] [-s] [-f FILE] [PERIOD]
+Usage: timetable [-h] [-j] [-m] [-s] [-u url] [-f FILE] [PERIOD]
 
 Arguments:
     PERIOD     Prints timetable for a given period
@@ -17,8 +17,10 @@ Options:
     -m, --manual        Do not use automatic login
     -s, --save          Save password to keyring.
                         Needs to be combined with --manual
+    -u, --url URL       Url of Unify's extranet
+                        Default is in '~/.extranet'
     -f, --file FILE     Use FILE to find credential
-                        Default is the 'credentials' in the HOME directory
+                        Default is in '~/.extranet'
 
 Examples:
     timetable  0        : print the current course
@@ -157,21 +159,22 @@ def main():
         open(cred_file, 'w').close()
 
     if args["--manual"]:
+        url      = input("Unify's extranet url: ")
         username = input("Username: ")
         password = getpass.getpass("Password: ")
         if args["--save"]:
             with open(cred_file, 'w') as f:
-                f.write(username + '\n')
-                keyring.set_password("extranet", username, password)
+                f.write(username + "\n" + url + "\n")
+                keyring.set_password("extranet", username+url, password)
 
     else:
         with open(cred_file) as f:
-            username = f.readline()[:-1]
-            password = keyring.get_password("extranet", username)
+            username,url = f.read().splitlines()
+            password = keyring.get_password("extranet", username+url)
 
 
     try:
-        timetable = Extranet(username, password).get_timetable()
+        timetable = Extranet(url, username, password).get_timetable()
     except LoginError:
         exit("Wrong login\n"
            + "If no password has been saved yet, please, try:\n"

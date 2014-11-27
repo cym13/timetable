@@ -1,8 +1,8 @@
 Description
 ===========
 
-This is a simple cli utility to view EFREI timetables (because the extranet
-is... well, CLI is good).
+This is a simple cli utility to view Unify's extranet timetables
+(because the extranet is... well, CLI is good).
 
 Warning
 =======
@@ -13,7 +13,7 @@ not be fully implemented yet.
 Usage
 =====
 
-Usage: timetable [-h] [-j] [-m] [-s] [-f FILE] [PERIOD]
+Usage: timetable [-h] [-j] [-m] [-s] [-u url] [-f FILE] [PERIOD]
 
 Arguments:
     PERIOD     Prints timetable for a given period
@@ -26,8 +26,10 @@ Options:
     -m, --manual        Do not use automatic login
     -s, --save          Save password to keyring.
                         Needs to be combined with --manual
+    -u, --url URL       Url of Unify's extranet
+                        Default is in '~/.extranet'
     -f, --file FILE     Use FILE to find credential
-                        Default is the 'credentials' in the HOME directory
+                        Default is in '~/.extranet'
 
 Examples:
     timetable  0        : print the current course
@@ -47,10 +49,10 @@ Dependencies
 Python3
 requests:   https://pypi.python.org/pypi/requests
 keyring:    https://pypi.python.org/pypi/keyring
+extranet:   https://pypi.python.org/pypi/extranet
 
 * This libraries are already distributed within this repository *
 
-ork's extranet library: https://github.com/ork/extranet.py
 docopt:                 https://github.com/docopt/docopt
 
 
