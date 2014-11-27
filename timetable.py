@@ -28,6 +28,7 @@ Examples:
 """
 
 import os
+import re
 import sys
 import time
 import datetime
@@ -109,11 +110,15 @@ def filter_dates(timetable, selection):
         timetable.reverse()
         return courses_in_range("end", now().timestamp(), 1, timetable)
 
-    if selection == "current":
+    if selection == "current" or selection == "0":
         return courses_in_range("start", "end", 1, timetable)
 
     if selection == "next":
         return courses_in_range(0, "start", 1, timetable)
+
+    if re.match(r"[0-9]+$", selection):
+        n = int(selection)
+        return courses_in_range(0, "start", n, timetable)
 
     try:
         return [ x for x in timetable
