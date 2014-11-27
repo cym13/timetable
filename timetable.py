@@ -9,6 +9,7 @@ Usage: timetable [-h] [-j] [-m] [-s] [-f FILE] [PERIOD]
 Arguments:
     PERIOD     Prints timetable for a given period
                Default is to print all available informations
+               See the examples below for more precisions
 
 Options:
     -h, --help          Print this help and exit
@@ -20,8 +21,12 @@ Options:
                         Default is the 'credentials' in the HOME directory
 
 Examples:
-    timetable  0        : print today
-    timetable  2        : print today, tomorrow and the day after
+    timetable  0        : print the current course
+    timetable  n        : print n next courses
+    timetable  today    : print today's courses
+    timetable  tomorrow : print tomorrow's courses
+    timetable  first    : print tomorrow's first course
+    timetable  start    : print tomorrow's first course's time
     timetable  next     : print the next course
     timetable  previous : print the previous course
     timetable  current  : print the current course
