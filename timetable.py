@@ -28,7 +28,6 @@ Examples:
     timetable  today    : print today's courses
     timetable  tomorrow : print tomorrow's courses
     timetable  first    : print tomorrow's first course
-    timetable  start    : print tomorrow's first course's time
     timetable  next     : print the next course
     timetable  previous : print the previous course
     timetable  current  : print the current course
@@ -123,14 +122,23 @@ def filter_dates(timetable, selection):
     if selection == "next":
         return courses_in_range(0, "start", 1, timetable)
 
+    if selection == "today":
+        return [ x for x in timetable
+                if x["start"].day == now().day ]
+
+    if selection == "tomorrow":
+        return [ x for x in timetable
+                if x["start"].day == (now().day + 1) ]
+
+    if selection == "first":
+        return [ x for x in timetable
+                if x["start"].day == (now().day + 1) ][:1]
+
     if re.match(r"[0-9]+$", selection):
         n = int(selection)
         return courses_in_range(0, "start", n, timetable)
 
-    try:
-        return [ x for x in timetable
-                   if x["start"].day <= now().day + int(selection) ]
-    except ValueError as e:
+    else:
         sys.exit("Invalid command: " + selection)
 
 
