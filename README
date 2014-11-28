@@ -13,7 +13,7 @@ not be fully implemented yet.
 Usage
 =====
 
-Usage: timetable [-h] [-j] [-m] [-s] [-u url] [-f FILE] [PERIOD]
+Usage: timetable [-h] [-j] [-c] [-m] [-s] [-u url] [-f FILE] [PERIOD]
 
 Arguments:
     PERIOD     Prints timetable for a given period
@@ -23,6 +23,7 @@ Arguments:
 Options:
     -h, --help          Print this help and exit
     -j, --json          Print data in the JSON format
+    -c, --compact       Use a compact output format
     -m, --manual        Do not use automatic login
     -s, --save          Save password to keyring.
                         Needs to be combined with --manual

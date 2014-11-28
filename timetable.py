@@ -4,7 +4,7 @@
 """
 Get Unify's extranet timetables
 
-Usage: timetable [-h] [-j] [-m] [-s] [-u url] [-f FILE] [PERIOD]
+Usage: timetable [-h] [-j] [-c] [-m] [-s] [-u url] [-f FILE] [PERIOD]
 
 Arguments:
     PERIOD     Prints timetable for a given period
@@ -14,6 +14,7 @@ Arguments:
 Options:
     -h, --help          Print this help and exit
     -j, --json          Print data in the JSON format
+    -c, --compact       Use a compact output format
     -m, --manual        Do not use automatic login
     -s, --save          Save password to keyring.
                         Needs to be combined with --manual
@@ -54,13 +55,17 @@ DAYS   = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
+def print_courses(courses, *, compact=False, fmt=None):
+    if fmt is None:
+        if compact:
+            fmt = "{title}: {period}: {room}"
+        else:
+            fmt = "{title}\n    {room}\n    {period}\n"
 
-def print_courses(courses):
     for c in courses:
-        print(c["title"])
-        print("    ", c["room"])
-        print("    ", period(c["start"], c["end"]))
-        print()
+        print(fmt.format(title=c["title"],
+                         room=c["room"],
+                         period=period(c["start"], c["end"])))
 
 
 def period(start, end, *, days=DAYS, months=MONTHS):
@@ -199,7 +204,7 @@ def main():
     if args["--json"]:
         print(converted_dates(timetable))
     else:
-        print_courses(timetable)
+        print_courses(timetable, compact=args["--compact"])
 
 
 if __name__ == "__main__":
