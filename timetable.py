@@ -144,7 +144,7 @@ def filter_dates(timetable, selection):
         n = int(selection)
         return courses_in_range(0, "start", n, timetable)
 
-    if re.match(r"[0-9]{2}/[0-9]{2}$",selection):
+    if re.match(r"[0-9]{1,2}/[0-9]{1,2}$", selection):
         selected = selection.split("/")
         return [x for x in timetable
                 if x["start"].day == int(selected[0])
