@@ -211,12 +211,7 @@ def main():
     if args["--json"]:
         print(converted_dates(timetable))
     else:
-        focus = courses_in_range("start", "end", 1, timetable)
-        if not focus:
-            focus = courses_in_range(0, "start", 1, timetable)
-            if focus:
-                focus = focus[0]
-        print_courses(timetable, focus, compact=args["--compact"])
+        print_courses(timetable, compact=args["--compact"])
 
 
 if __name__ == "__main__":

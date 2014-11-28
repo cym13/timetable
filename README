@@ -41,6 +41,7 @@ Examples:
     timetable  next     : print the next course
     timetable  previous : print the previous course
     timetable  current  : print the current course
+    timetable  dd/mm    : print the courses of given date
 
 Dependencies
 ============
